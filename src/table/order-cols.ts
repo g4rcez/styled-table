@@ -11,14 +11,20 @@ export const orderCols = (
   let x = 0;
   let y = 0;
 
-  const swap = (nodeA: NonNullable<HTMLElement>, nodeB: NonNullable<HTMLElement>) => {
+  const swap = (
+    nodeA: NonNullable<HTMLElement>,
+    nodeB: NonNullable<HTMLElement>
+  ) => {
     const parentA = nodeA.parentNode;
     const siblingA = nodeA.nextSibling === nodeB ? nodeA : nodeA.nextSibling;
     nodeB.parentNode!.insertBefore(nodeA, nodeB);
     parentA!.insertBefore(nodeB, siblingA);
   };
 
-  const isOnLeft = function (nodeA: NonNullable<HTMLElement>, nodeB: NonNullable<HTMLElement>) {
+  const isOnLeft = function (
+    nodeA: NonNullable<HTMLElement>,
+    nodeB: NonNullable<HTMLElement>
+  ) {
     const rectA = nodeA.getBoundingClientRect();
     const rectB = nodeB.getBoundingClientRect();
     return rectA.left + rectA.width / 2 < rectB.left + rectB.width / 2;
@@ -34,7 +40,9 @@ export const orderCols = (
     table.parentNode!.insertBefore(list, table);
     table.style.visibility = "hidden";
     const originalCells = [].slice.call(table.querySelectorAll("tbody td"));
-    const originalHeaderCells: HTMLElement[] = [].slice.call(table.querySelectorAll("th"));
+    const originalHeaderCells: HTMLElement[] = [].slice.call(
+      table.querySelectorAll("th")
+    );
     const numColumns = originalHeaderCells.length;
     originalHeaderCells.forEach((headerCell, headerIndex) => {
       const width = parseInt(window.getComputedStyle(headerCell).width);
@@ -50,7 +58,9 @@ export const orderCols = (
       newRow.appendChild(th);
       newTable.appendChild(newRow);
 
-      const cells: HTMLElement[] = originalCells.filter((_, idx) => (idx - headerIndex) % numColumns === 0);
+      const cells: HTMLElement[] = originalCells.filter(
+        (_, idx) => (idx - headerIndex) % numColumns === 0
+      );
       cells.forEach((cell) => {
         const newCell: HTMLElement = cell.cloneNode(true) as never;
         newCell.style.width = `${width}px`;
@@ -67,14 +77,18 @@ export const orderCols = (
   const mouseDownHandler = (e: any) => {
     e.stopPropagation();
     const th: HTMLElement = e.target;
-    const thList: HTMLTableColElement[] = Array.from(table.querySelectorAll("th")) as any;
+    const thList: HTMLTableColElement[] = Array.from(
+      table.querySelectorAll("th")
+    ) as any;
     draggingColumnIndex = thList.indexOf(th as never);
     if (draggingColumnIndex === -1) {
       const dataTitle = th.dataset.title;
       if (!dataTitle) {
         return;
       }
-      const elementParent: HTMLTableColElement = table.querySelector(`[data-title="${dataTitle}"]`) as never;
+      const elementParent: HTMLTableColElement = table.querySelector(
+        `[data-title="${dataTitle}"]`
+      ) as never;
       draggingColumnIndex = thList.indexOf(elementParent);
     }
     x = e.clientX - e.target.offsetLeft;
@@ -91,7 +105,10 @@ export const orderCols = (
       draggingEle.classList?.add?.("dragging");
       placeholder = document.createElement("div");
       placeholder.classList?.add("placeholder");
-      draggingEle.parentNode!.insertBefore(placeholder, draggingEle.nextSibling);
+      draggingEle.parentNode!.insertBefore(
+        placeholder,
+        draggingEle.nextSibling
+      );
       placeholder.style.width = `${draggingEle.offsetWidth}px`;
     }
 
@@ -119,11 +136,11 @@ export const orderCols = (
 
   const mouseUpHandler = function () {
     placeholder && placeholder.parentNode.removeChild(placeholder);
-
-    draggingEle.classList?.remove("dragging");
-    draggingEle.style.removeProperty("top");
-    draggingEle.style.removeProperty("left");
-    draggingEle.style.removeProperty("position");
+    if (draggingEle === undefined) return;
+    draggingEle?.classList?.remove("dragging");
+    draggingEle?.style.removeProperty("top");
+    draggingEle?.style.removeProperty("left");
+    draggingEle?.style.removeProperty("position");
 
     const endColumnIndex = Array.from(list.children).indexOf(draggingEle);
 
@@ -134,8 +151,14 @@ export const orderCols = (
     table.querySelectorAll("tr").forEach((row) => {
       const cells = Array.from(row.querySelectorAll("th, td")) as any;
       draggingColumnIndex > endColumnIndex
-        ? cells[endColumnIndex].parentNode.insertBefore(cells[draggingColumnIndex], cells[endColumnIndex])
-        : cells[endColumnIndex].parentNode.insertBefore(cells[draggingColumnIndex], cells[endColumnIndex].nextSibling);
+        ? cells[endColumnIndex].parentNode.insertBefore(
+            cells[draggingColumnIndex],
+            cells[endColumnIndex]
+          )
+        : cells[endColumnIndex].parentNode.insertBefore(
+            cells[draggingColumnIndex],
+            cells[endColumnIndex].nextSibling
+          );
     });
 
     table.style.removeProperty("visibility");
@@ -151,7 +174,10 @@ export const orderCols = (
     onChangeOrder(newStringItems);
   };
 
-  const events: Array<{ headerCell: HTMLTableHeaderCellElement; event: any }> = [];
+  const events: Array<{
+    headerCell: HTMLTableHeaderCellElement;
+    event: any;
+  }> = [];
 
   table.querySelectorAll("th").forEach((headerCell) => {
     if (!headerCell) return;

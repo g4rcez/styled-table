@@ -1,3 +1,4 @@
+import styled from "styled-components";
 import React from "react";
 import { useClassNames } from "../hooks/use-classnames";
 export type TH = React.DetailedHTMLProps<
@@ -9,6 +10,12 @@ export type TD = React.DetailedHTMLProps<
   HTMLTableDataCellElement
 >;
 
+const Th = styled.th`
+  padding: 0.35rem 0.5rem;
+  font-weight: 500;
+  border-bottom: 2px solid #f5f5f5;
+`;
+
 export const HeaderCell: React.FC<TH & any & { autoResize: boolean }> = ({
   className,
   cellRender,
@@ -19,15 +26,10 @@ export const HeaderCell: React.FC<TH & any & { autoResize: boolean }> = ({
   children,
   ...props
 }) => {
-  const headerClassName = useClassNames(
-    [className],
-    "px-2 py-3 bg-base text-default",
-    className
-  );
   return (
-    <th {...props} className={headerClassName}>
+    <Th {...props}>
       <span className="cursor-default">{children}</span>
-    </th>
+    </Th>
   );
 };
 
@@ -37,7 +39,6 @@ export const BodyCell: React.FC<
   const bodyCellClassName = useClassNames(
     [className],
     { "td-ellipsis": !!autoResize },
-    "p-2 text-default",
     className
   );
   return (

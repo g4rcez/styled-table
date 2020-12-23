@@ -5,9 +5,8 @@ import React, {
   useLayoutEffect,
   useMemo,
   useRef,
-  useState
+  useState,
 } from "react";
-import { FaMeh } from "react-icons/fa";
 import { Container } from "../styles/grid";
 import { StyledTable, Thead } from "../styles/table";
 import { BodyCell, HeaderCell, TD } from "./cells";
@@ -20,7 +19,10 @@ import { TableSkeletonRow } from "./table-skeleton-row";
 import { TableColumns } from "./types";
 import { usePagination } from "./use-pagination";
 
-type TR = React.DetailedHTMLProps<React.HTMLAttributes<HTMLTableRowElement>, HTMLTableRowElement>
+type TR = React.DetailedHTMLProps<
+  React.HTMLAttributes<HTMLTableRowElement>,
+  HTMLTableRowElement
+>;
 
 export type TableRowProps<T = never> = Omit<TR, "onClick"> & {
   onClick?(e: React.MouseEvent<HTMLTableRowElement, MouseEvent>, row: T): void;
@@ -251,16 +253,11 @@ export const Table: <T>(props: Table<T>) => any = React.forwardRef<
           </tbody>
         </StyledTable>
         {paginatedOrFull.length === 0 && !isLoading && (
-          <div className="pt-8 pb-4">
+          <div>
             {(props.Empty && props.Empty) || (
               <Fragment>
-                <div className="w-full">
-                  <FaMeh className="w-full mt-3 text-6xl antialiased text-disabled-light" />
-                </div>
-                <div className="justify-center w-full text-center">
-                  <p className="w-full text-xl font-bold text-disabled">
-                    Nothing to show
-                  </p>
+                <div>
+                  <p>No records found</p>
                 </div>
               </Fragment>
             )}

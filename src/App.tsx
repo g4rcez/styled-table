@@ -1,13 +1,11 @@
-import { Table } from "./table/table";
-import { FaCheck, FaEdit } from "react-icons/fa";
+import { FaCheck, FaEdit, FaTrash } from "react-icons/fa";
 import "./App.css";
-import logo from "./logo.svg";
-import { TableColumns } from "./table/types";
+import { Table } from "./table/table";
 
 const rows = [
   {
     id: "740",
-    name: "CRED - 15k+ - GRUPO 99999999",
+    name: "A".repeat(200),
     min_tpv: 15000,
     max_tpv: 999999999,
     margin_limit: 0,
@@ -193,22 +191,31 @@ const tableColumnsIndexes = [
     "data-title": "Actions",
     cellId: "",
     headerContent: "Actions",
-    cellRender: (_: any, props: any) => (
-      <span className="hover:text-primary-light color-transition hover:underline">
-        <FaEdit />
-      </span>
-    ),
+    cellRender: (_: any) => <FaEdit />,
+  },
+  {
+    "data-title": "More Actions",
+    cellId: "",
+    headerContent: "Actions",
+    cellRender: (_: any) => <FaTrash onClick={() => alert("FO")} />,
   },
 ];
 
 function App() {
   return (
-    <Table
-      autoResize
-      itemsPerPage={10}
-      rows={rows}
-      tableColumn={tableColumnsIndexes as any}
-    />
+    <div style={{ paddingLeft: "300px" }}>
+      <div style={{ width: "100%" }}>
+        <Table
+          changeRows
+          itemsPerPage={10}
+          rowProps={(row) => ({
+            onClick: () => alert(JSON.stringify(row)),
+          })}
+          rows={rows}
+          tableColumn={tableColumnsIndexes as any}
+        />
+      </div>
+    </div>
   );
 }
 

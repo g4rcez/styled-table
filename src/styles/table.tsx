@@ -10,11 +10,7 @@ export const StyledTable = styled.table`
 
   & th,
   & td {
-    padding: 0.5rem;
-  }
-
-  & .table-tr > tr > th {
-    border-bottom: 1px solid #e2e8f0;
+    padding: 0.7rem;
   }
 
   .td-ellipsis {
@@ -60,12 +56,11 @@ export const StyledTable = styled.table`
       border: none;
       border-bottom: 1px solid #f2f8f0;
       position: relative;
-      padding-left: 43%;
+      padding: 0.8rem 0.45rem;
       align-items: flex-start;
       width: 100%;
       margin-top: 0.75rem;
       margin-bottom: 0.5rem;
-      padding-top: 10px;
     }
 
     & td:last-child,
@@ -83,79 +78,12 @@ export const StyledTable = styled.table`
       font-size: 0.8rem;
       font-weight: bold;
     }
-
-    .expand-td {
-      text-align: left;
-    }
-  }
-
-  .draggable {
-    cursor: move;
-    user-select: none;
-  }
-
-  .placeholder {
-    background-color: #eee;
-    border: 2px dashed red;
-  }
-
-  .clone-list {
-    border: 1px solid red;
-    display: flex;
-  }
-
-  .clone-table {
-    border-collapse: collapse;
-    border: none;
-  }
-
-  .clone-table th,
-  .clone-table td {
-    border: 1px solid red;
-    border-left: none;
-    border-top: none;
-    padding: 0.5rem;
-  }
-
-  .dragging {
-    border-left: 1px solid red;
-    border-top: 1px solid red;
-    z-index: 999;
-  }
-
-  .o-draggable {
-    cursor: move;
-    user-select: none;
-  }
-
-  .o-placeholder {
-    border: 2px solid red;
-  }
-
-  .o-clone-list {
-    border-top: 1px solid red;
-  }
-
-  .o-clone-table {
-    border-collapse: collapse;
-    border: none;
-  }
-
-  .o-clone-table th,
-  .clone-table td {
-    border: 1px solid red;
-    border-top: none;
-    padding: 0.5rem;
-  }
-
-  .o-dragging {
-    border-top: 1px solid red;
-    z-index: 999;
   }
 `;
 
 export const Thead = styled.thead`
   font-size: 1rem;
+  font-weight: 100;
   align-items: flex-end;
   border-radius: 0.5rem;
 `;

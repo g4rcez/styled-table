@@ -17,10 +17,18 @@ const Item = styled.div`
   display: flex;
   flex: auto;
   flex-grow: 0;
-`;
 
-const selectClassName =
-  "form-select flex border-none cursor-pointer w-auto mr-2 border-b-2";
+  & > select {
+    cursor: pointer;
+    border: 1px solid transparent;
+  }
+
+  & > button {
+    cursor: pointer;
+    background-color: transparent;
+    border: 1px solid transparent;
+  }
+`;
 
 export const Pagination: React.FC<{
   pagination: PaginationType<any> | ServerPaginationType;
@@ -60,31 +68,19 @@ export const Pagination: React.FC<{
     <Div>
       <Item>
         <span className="mr-2">Items per page</span>
-        <select
-          value={props.pagination.itemsPerPage}
-          onChange={onChange}
-          className={selectClassName}
-        >
+        <select value={props.pagination.itemsPerPage} onChange={onChange}>
           {options}
         </select>
       </Item>
-      <Item className="flex flex-auto flex-row flex-grow-0">
+      <Item>
         <button disabled={firstDisabled} onClick={props.pagination.goBackward}>
-          <FaChevronLeft
-            className={`cursor-pointer ${
-              firstDisabled ? "text-disabled-light" : "text-dark"
-            }`}
-          />
+          <FaChevronLeft />
         </button>
-        <div className="text-disabled ml-2 pl-2 mr-2 pr-2">
+        <div>
           {props.pagination.currentPage} - {props.pagination.maxPage}
         </div>
         <button onClick={props.pagination.goForward} disabled={lastDisabled}>
-          <FaChevronRight
-            className={`cursor-pointer ${
-              lastDisabled ? "text-disabled-light" : "text-dark"
-            }`}
-          />
+          <FaChevronRight />
         </button>
       </Item>
     </Div>
